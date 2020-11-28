@@ -1,0 +1,39 @@
+{% extends 'Gestion/base.html' %}
+{% block body %}
+<h2>CRUD Pacientes</h2>
+<p> </p>
+
+<form class="form-inline"  action="createPaciente" method="POST">
+    {% csrf_token %}
+     <div class="form-group">
+        <label for="nombres">Nombres</label>
+        <input type="text" name="nombre" class="form-control" style="width:30%;" required="required"/>
+        <label for="apellidos">Apellidos</label>
+        <input type="text" name="apellido" class="form-control" style="width:30%;" required="required"/>
+        <button type="submit" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus"></span> Agregar</button>
+    </div>
+</form>
+<br />
+<table class="table table-bordered">
+    <thead class="alert-warning">
+        <tr>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Accion</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for member in members %}
+        <tr>
+            <td>{{ member.nombres }}</td>
+            <td>{{ member.apellidos }}</td>
+            <td><center><a class="btn btn-sm btn-warning" href="edit/{{ member.id }}"><span class="glyphicon glyphicon-edit"></span> Editar</a></center></td>
+            <!-- <a class="btn btn-sm btn-danger" href="delete/{{ member.id }}"><span class="glyphicon glyphicon-trash"></span> Borrar</a>-->
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p> </p>
+<a href="bienvenida">Volver</a>
+
+{% endblock %}

@@ -1,0 +1,150 @@
+{% extends 'Gestion/base.html' %}
+
+{% block body %}
+<h2>Gestion de Pedidos</h2>
+<p> </p>
+<form class="form-inline"  action="updatePedidosProducto/{{idped}}" method="POST">
+    {% csrf_token %}
+
+    <script>                     
+            function eslente(){
+                //traigo los combos
+                var seleccionl=document.getElementById('lejos'); 
+                var seleccionc=document.getElementById('cerca'); 
+                var seleccioni=document.getElementById('izquierda'); 
+                var selecciond=document.getElementById('derecha');
+                var seleccionm=document.getElementById('marco');
+
+                var elcombo=document.getElementById('produ');
+                var texto=elcombo.value;
+                var tipo=texto.indexOf(":");
+                var elvalor=texto.substr(tipo+1,5);
+                //alert(elvalor);
+                if (elvalor==='LENTE'){
+                        seleccionl.disabled=false;
+                        seleccionc.disabled=false;
+                        seleccioni.disabled=false;
+                        selecciond.disabled=false;
+                        seleccionm.disabled=false;
+                    }
+                    else{
+                        seleccionl.disabled=true;
+                        seleccionc.disabled=true;
+                        seleccioni.disabled=true;
+                        selecciond.disabled=true;
+                        seleccionm.disabled=true;  
+                    }
+            }
+            function esMayorACero(){
+                var cantidada=document.getElementById('canti');
+                var texto=cantidada.value;
+                if (texto<=0){
+                    alert("Debe ser distinto y/o mayor de cero");
+                    cantidada.value=null;
+                }
+            }
+    </script> 
+
+    <div class="form-group">
+            <label for="productos">Producto</label><label for="pedidoid" name="pedidoid">{{idped}}</label>
+            <select name="productos" id="produ" onchange="eslente()" class="form-control" style="width:80%;" required="required">
+                {% for producto in productos %}
+                    <option>{{producto.id}}-{{producto.nompro}}|{{producto.precio}}:{{producto.tipo}}</option>
+                {% endfor %}
+            </select>
+    </div>
+    <div class="form-group">
+            <label for="cantidad">Cantidad</label>
+            <input type="number" pattern="[1–9]$" id="canti" onchange="esMayorACero()" placeholder="1" name="cantidad" class="form-control" style="width:75%;" required="required"/>
+    </div>
+    <p> </p>
+    <div class="form-group">
+            <label for="lejos">Lejos</label>
+            <select name="lejos" id="lejos" class="form-control" style="width:70%;" required="required" disabled>
+                    <option selected>NO</option>
+                    <option >SI</option>
+            </select>
+    </div>
+    <div class="form-group">
+            <label for="cerca">Cerca</label>
+            <select name="cerca" id="cerca" class="form-control" style="width:70%;" required="required" disabled>
+                    <option selected>NO</option>
+                    <option >SI</option>
+            </select>
+    </div>
+    <div class="form-group">
+            <label for="derecha">Derecha</label>
+            <select name="derecha" id="derecha" class="form-control" style="width:70%;" required="required" disabled>
+                    <option selected>NO</option>
+                    <option >SI</option>
+            </select>
+    </div>
+    <div class="form-group">
+            <label for="izquierda">Izquierda</label>
+            <select name="izquierda" id="izquierda" class="form-control" style="width:70%;" required="required" disabled>
+                    <option selected>NO</option>
+                    <option >SI</option>
+            </select>
+    </div>
+        <div class="form-group">
+            <label for="marco">Marco</label>
+            <select name="marco" id="marco" class="form-control" style="width:70%;" required="required" disabled>
+                    <option selected>NO</option>
+                    <option >SI</option>
+            </select>
+    </div>
+    <p> </p>
+
+    <br />
+    <div class="form-group">
+        {%ifnotequal datospedido.estado "PEDIDO"%}
+            {%ifnotequal datospedido.estado "FINZALIZADO"%}
+                {%ifnotequal datospedido.estado "TALLER"%}
+                    <button type="submit" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus"></span> Agregar </button>
+                {%endifnotequal%}
+            {%endifnotequal%}
+        {%endifnotequal%}
+    </div>
+</form>
+<br />
+<form class="form-inline"  action="" method="POST">
+    {% csrf_token %}
+    <table class="table table-bordered">
+        <thead class="alert-warning">
+            <tr>
+                <th>Pedido</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                {%ifnotequal datospedido.estado "PEDIDO"%}
+                    {%ifnotequal datospedido.estado "FINZALIZADO"%}
+                        {%ifnotequal datospedido.estado "TALLER"%}
+                            <th>Accion</th>
+                        {%endifnotequal%}
+                    {%endifnotequal%}
+                {%endifnotequal%}
+            </tr>
+        </thead>
+        <tbody>
+            {% for pedido in pedidos %}
+            <tr>
+                <td>{{ idped }}</td>
+                <td>{{ pedido.id_producto }}</td>
+                <td>{{ pedido.cantidad }}</td>
+                <td>${{ pedido.subtotal }}</td>
+                {%ifnotequal datospedido.estado "PEDIDO"%}
+                    {%ifnotequal datospedido.estado "FINALIZADO"%}
+                        {%ifnotequal datospedido.estado "TALLER"%}
+                            <td><center><a class="btn btn-sm btn-danger" href="deletepedidoproducto/{{ pedido.id }}/{{idped}}"><span class="glyphicon glyphicon-edit"></span> Borrar</a></center></td>
+                        {%endifnotequal%}
+                    {%endifnotequal%}
+                {%endifnotequal%}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</form>
+<p> </p>
+<a href="/Gestion/crudPedidos">Volver</a>
+
+{% endblock %}

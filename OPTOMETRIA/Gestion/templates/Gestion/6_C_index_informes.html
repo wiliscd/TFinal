@@ -1,0 +1,44 @@
+{% extends 'Gestion/base.html' %}
+{% block body %}
+<h2>Productos mas vendidos de mayor a menor</h2>
+<p> </p>
+
+<form class="form-inline"  action="" method="GET">
+    {% csrf_token %}
+    
+     <div class="form-group">
+       <div class="form-group">
+            <label for="fecha_hora">Desde:</label>
+            <input type="datetime-local" name="desde" class="form-control" style="width:75%;" required="required"/>
+        </div>
+        <div class="form-group">
+            <label for="fecha_hora">Hasta:</label>
+            <input type="datetime-local" name="hasta" class="form-control" style="width:75%;" required="required"/>
+        </div>
+        <p></p>
+        <button type="submit" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus"></span> Buscar</button>
+        </div>
+</form>
+<br />
+
+<form class="form-inline"  action="" method="GET">
+    {% csrf_token %}
+    <table class="table table-bordered">
+        <thead class="alert-warning">
+            <tr>
+                <th>Producto</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in lospedidos %}
+            <tr>
+                <td>{{ usuario}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</form>
+<p> </p>
+<a href="bienvenida">Volver</a>
+
+{% endblock %}

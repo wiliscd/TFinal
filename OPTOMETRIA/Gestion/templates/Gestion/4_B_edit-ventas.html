@@ -1,0 +1,44 @@
+{% extends 'Gestion/base.html' %}
+{% block body %}
+<h2>Gestion de Pedido-Edicion de Datos</h2>
+    <form method="POST" action="update/{{ pedidos.id }}">
+        {% csrf_token %}
+        <div class="form-group">
+        <label for="paciente">Paciente: {{pedidos.id_paciente }}</label>        
+        </div>
+        <div class="form-group">
+        <label for="formapago">Forma de Pago: {{pedidos.pago }} </label>
+            <!--<select name="formapago" class="form-control" style="width:60%;" required="required">
+                <option>Efectivo</option>
+                <option>Tarjeta Credito</option>
+                <option>Tarjeta Debito</option>
+                <option>Billereta Virtual</option>
+            </select>
+            <p></p>-->
+        </div>
+        <!--<div class="form-group">
+            <label for="fecha">Fecha: {{pedidos.fecha }}</label>
+            <input type="datetime-local" name="fecha" class="form-control" style="width:75%;" required="required"/>
+        </div>-->
+        <div>
+            <label for="Estado">Estado: {{pedidos.estado}}</label>
+            {%ifnotequal pedidos.estado "PEDIDO"%}
+                {%ifnotequal pedidos.estado "FINALIZADO"%}
+                    {%ifnotequal pedidos.estado "TALLER"%}
+                        <select name="Estado" class="form-control" style="width:35%;" required="required">
+                            <!--<option selected>PENDPEDIDOIENTE</option>-->
+                            <option selected>PEDIDO</option>
+                            <option >TALLER</option>
+                        </select>
+                    {%endifnotequal%}
+                {%endifnotequal%}
+            {%endifnotequal%}
+        </div>
+        <p> </p>
+        <div class="form-group">
+            <button type="submit" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-edit"></span> Actualizar</button>
+        </div>
+    </form>
+    <p> </p>
+    <a href="/Gestion/crudPedidos">Volver</a>
+{% endblock %}

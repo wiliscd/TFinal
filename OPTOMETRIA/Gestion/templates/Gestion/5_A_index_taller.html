@@ -1,0 +1,61 @@
+{% extends 'Gestion/base.html' %}
+{% block body %}
+<h2>Gestion Taller</h2>
+<p> </p>
+
+
+<br />
+<form class="form-inline" name="elfo" action="" method="GET">
+    {% csrf_token %}
+    <script>
+            function estaSeguro(){
+                alert("Se cambiara a Finalizado el Pedido");}
+    </script>
+
+    <table class="table table-bordered">
+        <thead class="alert-warning">
+            <tr>
+                <th>Nro Pedido</th>
+                <th>Fecha</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Estado</th>
+                <th>Accion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pedido in pedidos %}               
+                <tr>
+                {%for cdetalle in detalle%}
+                    {%ifequal pedido.id cdetalle.id_pedido_id%}
+                        <td>{{ pedido.id }}</td>
+                        <td>{{ pedido.fecha }}</td>
+                        {%ifequal cdetalle.tipo_P "LENTE"%}
+                            <td>{{ cdetalle.id_producto }} - D:{{cdetalle.DE}}-I:{{cdetalle.IZ}}-L:{{cdetalle.LE}}-C:{{cdetalle.CE}}-M:{{cdetalle.MA}}  </td>
+                        {%endifequal%}
+                        {%ifnotequal cdetalle.tipo_P "LENTE"%}
+                            <td>{{ cdetalle.id_producto }} </td>
+                        {%endifnotequal%}  
+                        <td>{{ cdetalle.cantidad }}</td>
+                        <td>{{ pedido.estado }}</td>
+                    {%endifequal%}   
+                </tr>
+                {% endfor %}
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                {%ifnotequal pedido.estado "PENDIENTE"%}
+                    {%ifnotequal pedido.estado "FINALIZADO"%}
+                        <td><a class="btn btn-sm btn-danger"  onclick="estaSeguro()" href="finalizarTaller/{{ pedido.id }}"><span class="glyphicon glyphicon-edit"></span> Finalizar</a></center></td>
+                    {%endifnotequal%}
+                {%endifnotequal%} 
+            {% endfor %}
+        </tbody>
+    </table>
+</form>
+<p> </p>
+<a href="bienvenida">Volver</a>
+
+{% endblock %}

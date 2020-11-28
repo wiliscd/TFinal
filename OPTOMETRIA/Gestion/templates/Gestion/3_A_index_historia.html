@@ -1,0 +1,59 @@
+{% extends 'Gestion/base.html' %}
+{% block body %}
+<h2>Gestion de Historias Clinicas</h2>
+<p> </p>
+
+<form class="form-inline"  action="" method="POST">
+    {% csrf_token %}
+     <div class="form-group">
+       <div class="form-group">
+            <label for="fecha_hora">Desde:</label>
+            <input type="datetime-local" name="desde" class="form-control" style="width:75%;" required="required"/>
+        </div>
+        <div class="form-group">
+            <label for="fecha_hora">Hasta:</label>
+            <input type="datetime-local" name="hasta" class="form-control" style="width:75%;" required="required"/>
+        </div>
+        <div>
+         <p></p>
+        <label for="Estado">Estado</label>
+        <select name="estado" class="form-control" style="width:30%;" required="required">
+            <option>NOPRESENTE</option>
+            <option>PRESENTE</option>
+        </select>
+        </div>
+        <p></p>
+        <button type="submit" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus"></span> Buscar</button> <a href="CrudHistorias">Limpiar</a>
+        </div>
+</form>
+<br />
+
+<form class="form-inline"  action="" method="POST">
+    {% csrf_token %}
+    <table class="table table-bordered">
+        <thead class="alert-warning">
+            <tr>
+                <th>Paciente</th>
+                <th>Fecha-Hora</th>
+                <th>Historia</th>
+                <th>Estado</th>
+                <th>Accion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.id_paciente }}</td>
+                <td>{{ usuario.fecha_hora }}</td>
+                <td>{{ usuario.descrip }}</td>
+                <td>{{ usuario.Estado }}</td>
+                <td><center><a class="btn btn-sm btn-warning" href="edithistoria/{{ usuario.id }}"><span class="glyphicon glyphicon-edit"></span> Editar</a></center></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</form>
+<p> </p>
+<a href="bienvenida">Volver</a>
+
+{% endblock %}

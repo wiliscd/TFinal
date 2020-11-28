@@ -1,0 +1,15 @@
+{% extends 'Gestion/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block body %}
+<h2>Inicio de sesion</h2>
+
+<form method="POST">
+    {{form|crispy}}
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">Iniciar Sesion</button>
+</form>
+
+<hr />
+{% endblock %}

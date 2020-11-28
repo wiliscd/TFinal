@@ -1,0 +1,26 @@
+{% extends 'Gestion/base.html' %}
+{% block body %}
+<h2>Historias Clinicas - Edicion</h2>
+    <form method="POST" action="update/{{ elturno.id }}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="paciente">Paciente: {{elturno.id_paciente }} </label> 
+        </div>
+        <div class="form-group">
+            <label for="historia">Historia:</label>
+            <input type="text" name="descrip" value="{{elturno.descrip}}" style="width:90%;"/>
+            
+        </div>
+        <label for="Estado">Estado</label>
+        <select name="estado" class="form-control" style="width:35%;" required="required">
+            <option >NOPRESENTE</option>
+            <option selected>PRESENTE</option>
+        </select>
+        <p> </p>
+        <div class="form-group">
+            <button type="submit" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-edit"></span> Actualizar</button>
+        </div>
+    </form>
+    <p> </p>
+    <a href="/Gestion/CrudHistorias">Volver</a>
+{% endblock %}

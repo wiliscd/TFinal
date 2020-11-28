@@ -1,0 +1,21 @@
+
+{% extends 'Gestion/layout.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h2>Usuarios autenticados</h2>
+
+<h1>Modulo Agregar Pacientes:</h1>
+<form method="POST" action="">
+    {{regPac|crispy}}
+{% csrf_token %}
+<button type="submit" class="btn btn-success">Grabar</button>
+</form>
+
+<p> </p>
+<a href="bienvenida">Volver</a>
+
+
+{% endblock %}

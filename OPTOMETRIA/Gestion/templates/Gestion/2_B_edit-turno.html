@@ -1,0 +1,30 @@
+{% extends 'Gestion/base.html' %}
+{% block body %}
+<h2>CRUD Turnos - Modificacion de Turno</h2>
+    <form method="POST" action="update/{{ elturno.id }}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="paciente">Paciente: {{menbers.id_paciente }} </label> 
+            <select name="paciente" class="form-control" style="width:80%;" required="required">
+            {% for paciente in members %}                    
+                    <option>{{paciente.id}}-{{paciente.apellidos}}, {{paciente.nombres}}</option>
+            {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="medico">Medico: {{elturno.id_medico}}</label>
+            <select name="medix" class="form-control" style="width:80%;" required="required">
+             {% for medico in medicos %}
+               <option>{{medico.id}}-{{medico.last_name}}, {{medico.first_name}}</option>
+              {% endfor %}
+           </select>
+        </div>
+        <div class="form-group">
+            <label for="fecha_hora">Fecha-Hora: {{elturno.fecha_hora}}</label>
+            <input type="datetime-local" name="fecha_hora" class="form-control" style="width:60%;" required="required"/>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-edit"></span> Actualizar</button>
+        </div>
+    </form>
+{% endblock %}

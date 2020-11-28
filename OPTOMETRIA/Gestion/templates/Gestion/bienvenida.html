@@ -1,0 +1,36 @@
+{% extends 'Gestion/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block body %}
+
+<h2>Usuarios autenticados</h2>
+
+<p>
+    Bienvenido <b>{{request.user.username}}</b>, 
+    Estas viendo el dashboard para los usuarios del grupo: {{quegrupo}} 
+</p>
+<p></p>
+{%if quegrupo == 'SECRETARIA'%}
+    <!--<p><a href="crudPacientes">CRUD Pacientes</a></p>-->
+    <p><a href="crudTurnos">Gestion de Turnos</a></p>
+{% endif %}
+{%if quegrupo == 'MEDICOS'%}
+    <p><a href="CrudHistorias">Pacientes</a></p>
+{% endif %}
+{%if quegrupo == 'VENTAS'%}
+    <p><a href="crudPedidos">Pedidos</a></p>
+{% endif %}
+{%if quegrupo == 'TALLER'%}
+    <p><a href="crudtaller">Taller</a></p>
+{% endif %}
+{%if quegrupo == 'GERENCIA'%}
+    <p><a href="asistenciaPacientes">Asistencia de Pacientes</a></p>
+    <p><a href="pedidosDePacientes">Pedidos de Pacientes x 1 minimo</a></p>
+    <p><a href="productosmasvendidos">Productos mas vendidos del mes</a></p>
+    <p><a href="vtastotalesxmesxvendedor">Vtas. Totales Mensuales x Vendedor</a></p>
+{% endif %}
+<p></p>
+<a href="login">Cerrar sesión</a>
+
+{% endblock %}
